@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+use function Gendiff\Cli\getInput;
+
+require_once __DIR__ . '/../src/Autoload.php';
+
+[
+    'pathToFile1' => $pathToFile1,
+    'pathToFile2' => $pathToFile2,
+    'format' => $format
+] = getInput();
