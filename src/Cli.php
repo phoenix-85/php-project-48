@@ -2,14 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Gendiff\Cli;
+namespace Differ\Cli;
 
 use Docopt;
 
-function getInput(): void
+function getInput(): array
 {
     $doc = getDoc();
-    $args = Docopt::handle($doc);
+    $args = Docopt::handle($doc, ['version' => '1.0.0']);
+
+    $pathToFile1 = $args['<firstFile>'];
+    $pathToFile2 = $args['<secondFile>'];
+    $format = $args['--format'];
+
+    return [
+        'pathToFile1' => $pathToFile1,
+        'pathToFile2' => $pathToFile2,
+        'format' => $format
+    ];
 }
 
 function getDoc(): string

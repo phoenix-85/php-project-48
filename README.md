@@ -13,9 +13,11 @@ ___
 
 * make install
 
-### Запуск порграммы
+### Запуск программы
 
 * make gendiff
+
+Пример сравнения двух плоских JSON-файлов [ASCIINEMA](https://asciinema.org/a/q2P0OGVB68BDPIsAfx41ZZ3TM)
 
 ### Тестирование и проверка
 
