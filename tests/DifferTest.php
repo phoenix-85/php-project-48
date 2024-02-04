@@ -23,6 +23,8 @@ class DifferTest extends TestCase
     }
     public function testModifyArray(): void
     {
+        $this->assertEquals([], modifyArray([]));
+
         $actual = modifyArray([true, false, 'value']);
         $expected = ['true', 'false', 'value'];
         $this->assertEquals($expected, $actual);
