@@ -4,7 +4,7 @@ namespace Hexlet\Code\Tests;
 
 use PHPUnit\Framework\TestCase;
 use function Differ\Differ\genDiff;
-use function Differ\Differ\modifyArray;
+use function Differ\Differ\changeBooleanToStringValue;
 
 class DifferTest extends TestCase
 {
@@ -21,11 +21,11 @@ class DifferTest extends TestCase
 
         $this->assertFileEquals($expected, $actual);
     }
-    public function testModifyArray(): void
+    public function testChangeBooleanToStringValue(): void
     {
-        $this->assertEquals([], modifyArray([]));
+        $this->assertEquals(new \stdClass(), changeBooleanToStringValue(new \stdClass()));
 
-        $actual = modifyArray([true, false, 'value']);
+        $actual = changeBooleanToStringValue([true, false, 'value']);
         $expected = ['true', 'false', 'value'];
         $this->assertEquals($expected, $actual);
     }
