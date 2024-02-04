@@ -4,6 +4,7 @@ namespace Hexlet\Code\Tests;
 
 use PHPUnit\Framework\TestCase;
 use function Differ\Differ\genDiff;
+use function Differ\Differ\modifyArray;
 
 class DifferTest extends TestCase
 {
@@ -19,5 +20,11 @@ class DifferTest extends TestCase
         $actual = __DIR__ . '/fixtures/output1.txt';
 
         $this->assertFileEquals($expected, $actual);
+    }
+    public function testModifyArray(): void
+    {
+        $actual = modifyArray([true, false, 'value']);
+        $expected = ['true', 'false', 'value'];
+        $this->assertEquals($expected, $actual);
     }
 }
