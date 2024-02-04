@@ -51,7 +51,6 @@ function genDiff($pathToFile1, $pathToFile2): string
 
 function changeBooleanToStringValue($data): object
 {
-    var_dump($data);
     $result = new \stdClass();
     foreach ($data as $key => $value) {
         match ($value) {
