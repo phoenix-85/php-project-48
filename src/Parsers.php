@@ -4,11 +4,8 @@ namespace Differ\Parsers;
 
 use Symfony\Component\Yaml\Yaml;
 
-function parseFile($pathToFile): object
+function parseFile($data, $extension): object
 {
-    $data = file_get_contents($pathToFile);
-    $extension = pathinfo($pathToFile, PATHINFO_EXTENSION);
-
     return match ($extension) {
         'json' => json_decode($data),
         'yml', 'yaml' => Yaml::parse($data, Yaml::PARSE_OBJECT_FOR_MAP),

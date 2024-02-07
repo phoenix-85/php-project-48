@@ -12,5 +12,5 @@ require_once __DIR__ . '/../src/Autoload.php';
     'format' => $format
 ] = getInput();
 
-$diff = genDiff($pathToFile1, $pathToFile2);
+$diff = genDiff($pathToFile1, $pathToFile2, $format);
 print_r($diff);
