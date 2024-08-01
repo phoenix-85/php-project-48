@@ -3,68 +3,67 @@
 namespace Differ\Differ;
 
 use function Differ\Formatter\formatOutput;
-use function Differ\Parsers\parseFile;
-use function Functional\sort;
+use function Differ\Parsers\getDataFromFile;
+use function Functional\sort as func_sort;
 
 function genDiff($pathToFile1, $pathToFile2, $format): string
 {
-    $pathToFile1 = file_exists($pathToFile1) ? $pathToFile1 : __DIR__ . '/' . $pathToFile1;
-    $pathToFile2 = file_exists($pathToFile2) ? $pathToFile2 : __DIR__ . '/' . $pathToFile2;
-
-    $file1 = parseFile(file_get_contents($pathToFile1), pathinfo($pathToFile1, PATHINFO_EXTENSION));
-    $file2 = parseFile(file_get_contents($pathToFile2), pathinfo($pathToFile1, PATHINFO_EXTENSION));
-
-    $getDiff = getDiff($file1, $file2);
-
-    return formatOutput($getDiff, $format);
+    $data1 = getDataFromFile($pathToFile1);
+    $data2 = getDataFromFile($pathToFile2);
+    $diff = makeDiffData($data1, $data2);
+    return formatOutput($diff, $format);
 }
-
-function getDiff($data1, $data2): array
+function makeDiffData($data1, $data2): array
 {
-    $iter = function ($currValue1, $currValue2) use (&$iter) {
-        $keys = sort(
-            array_keys([...(array)$currValue1, ...(array)$currValue2]),
-            fn($left, $right) => strcmp($left, $right),
-            true
-        );
+    $keys = func_sort(
+        array_unique(array_keys(array_merge(get_object_vars($data1), get_object_vars($data2)))),
+        fn($left, $right) => strcmp($left, $right),
+        true
+    );
 
-        return array_reduce(
-            $keys,
-            function ($acc, $key) use ($currValue1, $currValue2, $iter) {
-                $existsKeyInData1 = property_exists($currValue1, $key);
-                $existsKeyInData2 = property_exists($currValue2, $key);
-
-                if (($existsKeyInData1) && ($existsKeyInData2)) {
-                    $isObj1 = is_object($currValue1->$key);
-                    $isObj2 = is_object($currValue2->$key);
-                    if (($isObj1) && ($isObj2)) {
-                        $acc["  $key"] = $iter($currValue1->$key, $currValue2->$key);
-                    } elseif ($currValue1->$key == $currValue2->$key) {
-                        $acc["  $key"] = $currValue1->$key;
-                    } else {
-                        $acc["- $key"] = $isObj1 ? $iter($currValue1->$key, $currValue1->$key) : $currValue1->$key;
-                        $acc["+ $key"] = $isObj2 ? $iter($currValue1->$key, $currValue2->$key) : $currValue2->$key;
-                    }
-                } else {
-                    if ($existsKeyInData1) {
-                        if (is_object($currValue1->$key)) {
-                            $acc["- $key"] = $iter($currValue1->$key, $currValue1->$key);
-                        } else {
-                            $acc["- $key"] = $currValue1->$key;
-                        }
-                    }
-                    if ($existsKeyInData2) {
-                        if (is_object($currValue2->$key)) {
-                            $acc["+ $key"] = $iter($currValue2->$key, $currValue2->$key);
-                        } else {
-                            $acc["+ $key"] = $currValue2->$key;
-                        }
-                    }
-                }
-                return $acc;
-            },
-            []
-        );
+    $makeNode = function ($data) use (&$makeNode) {
+        if (!is_object($data)) {
+            return $data;
+        }
+        $keys = array_keys(get_object_vars($data));
+        $result = [];
+        foreach ($keys as $key) {
+            $result[$key] = ["value" => $makeNode($data->$key)];
+        }
+        return $result;
     };
-    return $iter($data1, $data2);
+
+    $makeDiffNode = function ($key, $data1, $data2) use (&$makeDiffNode, $makeNode): array|string {
+        if (!property_exists($data1, $key)) {
+            return [
+                "status" => "added",
+                "value" => $makeNode($data2->$key)];
+        }
+        if (!property_exists($data2, $key)) {
+            return [
+                "status" => "removed",
+                "value" => $makeNode($data1->$key)];
+        }
+        if (is_object($data1->$key) && is_object($data2->$key)) {
+            $result = [
+                "status" => "matched",
+                "value" => makeDiffData($data1->$key, $data2->$key)];
+        } elseif ($data1->$key === $data2->$key) {
+            $result = [
+                "status" => "nested",
+                "value" => $makeNode($data1->$key)];
+        } else {
+            $result = [
+                "status" => "updated",
+                "value1" => $makeNode($data1->$key),
+                "value2" => $makeNode($data2->$key)];
+        }
+        return $result;
+    };
+
+    $result = [];
+    foreach ($keys as $key) {
+        $result[$key] = $makeDiffNode($key, $data1, $data2);
+    }
+    return $result;
 }

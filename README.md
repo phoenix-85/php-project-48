@@ -18,6 +18,7 @@ ___
 * make gendiff
 
 Пример сравнения двух плоских JSON-файлов [ASCIINEMA](https://asciinema.org/a/rngphDkJ5tb199UTIk71aVNEu)
+Пример сравнения двух вложенных JSON-файлов [ASCIINEMA](https://asciinema.org/a/tEsMroNAFmSsgfOr6MBjL74U6)
 
 ### Тестирование и проверка
 

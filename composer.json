@@ -13,7 +13,9 @@
             "src/Cli.php",
             "src/Differ.php",
             "src/Formatter.php",
-            "src/Parsers.php"
+            "src/Parsers.php",
+            "src/Formatters/stylish.php",
+            "src/Formatters/plain.php"
         ]
     },
     "autoload-dev": {
