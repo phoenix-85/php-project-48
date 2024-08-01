@@ -4,6 +4,7 @@ namespace Differ\Formatter;
 
 use function Differ\Formatters\plain\formatPlain;
 use function Differ\Formatters\stylish\formatStylish;
+use function Differ\Formatters\json\formatJSON;
 
 function toString($value): string
 {
@@ -18,6 +19,7 @@ function toString($value): string
 function formatOutput(array $diff, $format): string
 {
     return match ($format) {
+        'json' => formatJSON($diff),
         'plain' => formatPlain($diff),
         default => formatStylish($diff)
     };

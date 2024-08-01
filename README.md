@@ -20,6 +20,7 @@ ___
 * Пример сравнения двух плоских JSON-файлов [ASCIINEMA](https://asciinema.org/a/rngphDkJ5tb199UTIk71aVNEu)
 * Пример сравнения двух вложенных JSON-файлов [ASCIINEMA](https://asciinema.org/a/tEsMroNAFmSsgfOr6MBjL74U6)
 * Пример вывода в формате PLAIN [ASCIINEMA](https://asciinema.org/a/CDjY2Pb8W70q52kcrEubcb50N)
+* Пример вывода в формате JSON [ASCIINEMA](https://asciinema.org/a/nL3UnSSVeSf2VpPJzZAjMeB3P)
 
 ### Тестирование и проверка
 
