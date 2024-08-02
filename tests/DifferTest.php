@@ -17,5 +17,9 @@ class DifferTest extends TestCase
         $actual2 = genDiff(FIXTURES_DIR . "file1.yml", FIXTURES_DIR . "file2.yml", "plain");
         $expected2 = file_get_contents(FIXTURES_DIR . "test_diff_plain.txt");
         $this->assertEquals($actual2, $expected2);
+
+        $actual3 = genDiff(FIXTURES_DIR . "file1.yml", FIXTURES_DIR . "file2.yml", "json");
+        $expected3 = file_get_contents(FIXTURES_DIR . "test_diff_json.txt");
+        $this->assertEquals($actual3, $expected3);
     }
 }
