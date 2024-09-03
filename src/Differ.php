@@ -32,7 +32,7 @@ function makeDiffData(object $data1, object $data2): array
         return array_combine($keys, $values);
     };
 
-    $makeDiffNode = function ($key, $data1, $data2) use (&$makeDiffNode, $makeNode): array {
+    $makeDiffNode = function ($key, $data1, $data2) use ($makeNode): array {
         if (!property_exists($data1, $key)) {
             return [
                 "status" => "added",
