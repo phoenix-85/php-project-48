@@ -1,6 +1,7 @@
 <?php
 
 namespace Differ\Formatters\plain;
+
 // @phpstan-ignore missingType.iterableValue
 function formatPlain(array $data): string
 {
