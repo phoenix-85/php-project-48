@@ -60,9 +60,7 @@ function makeDiffData(object $data1, object $data2): array
         return $result;
     };
 
-    $result = [];
-    foreach ($keys as $key) {
-        $result[$key] = $makeDiffNode($key, $data1, $data2);
-    }
-    return $result;
+    $values = array_map(fn($key) => $makeDiffNode($key, $data1, $data2), $keys);
+
+    return array_combine($keys, $values);
 }

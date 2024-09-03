@@ -5,10 +5,9 @@ namespace Differ\Formatters\plain;
 function formatPlain(array $data): string
 {
     $iter = function ($node, $path = "") use (&$make) {
-        $result = [];
-        foreach ($node as $key => $body) {
-            $result[] = $make($key, $body, $path);
-        }
+
+        $result = array_map(fn($key, $body) => $make($key, $body, $path), array_keys($node), $node);
+
         return implode(PHP_EOL, array_filter($result));
     };
 

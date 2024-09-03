@@ -6,7 +6,7 @@ use function Differ\Formatters\plain\formatPlain;
 use function Differ\Formatters\stylish\formatStylish;
 use function Differ\Formatters\json\formatJSON;
 
-function toString($value): string
+function toString(mixed $value): string
 {
     return match ($value) {
         true => "true",
@@ -16,7 +16,7 @@ function toString($value): string
     };
 }
 
-function formatOutput(array $diff, $format): string
+function formatOutput(array $diff, string $format): string
 {
     return match ($format) {
         'json' => formatJSON($diff),

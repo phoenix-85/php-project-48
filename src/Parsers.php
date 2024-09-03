@@ -9,7 +9,7 @@ function getDataFromFile(string $filePath): object
     $fileFullPath = file_exists($filePath) ? $filePath : __DIR__ . '/' . $filePath;
     return parseData(file_get_contents($fileFullPath), pathinfo($fileFullPath, PATHINFO_EXTENSION));
 }
-function parseData($data, $extension): object
+function parseData(mixed $data, string $extension): object
 {
     return match ($extension) {
         'json' => json_decode($data, false),
