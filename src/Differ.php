@@ -36,6 +36,7 @@ function makeDiffData(object $data1, object $data2): array
         if (!property_exists($data1, $key)) {
             return [
                 "status" => "added",
+                // @phpstan-ignore-line
                 "value" => $makeNode($data2->$key)];
         }
         if (!property_exists($data2, $key)) {
