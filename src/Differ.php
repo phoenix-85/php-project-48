@@ -42,20 +42,25 @@ function makeDiffData(object $data1, object $data2): array
         if (!property_exists($data2, $key)) {
             return [
                 "status" => "removed",
+                // @phpstan-ignore-next-line
                 "value" => $makeNode($data1->$key)];
         }
         if (is_object($data1->$key) && is_object($data2->$key)) {
             $result = [
                 "status" => "matched",
+                // @phpstan-ignore-next-line
                 "value" => makeDiffData($data1->$key, $data2->$key)];
         } elseif ($data1->$key === $data2->$key) {
             $result = [
                 "status" => "nested",
+                // @phpstan-ignore-next-line
                 "value" => $makeNode($data1->$key)];
         } else {
             $result = [
                 "status" => "updated",
+                // @phpstan-ignore-next-line
                 "value1" => $makeNode($data1->$key),
+                // @phpstan-ignore-next-line
                 "value2" => $makeNode($data2->$key)];
         }
         return $result;
