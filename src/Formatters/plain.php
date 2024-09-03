@@ -1,11 +1,11 @@
 <?php
 
 namespace Differ\Formatters\plain;
-
+// @phpstan-ignore missingType.iterableValue
 function formatPlain(array $data): string
 {
     $iter = function ($node, $path = "") use (&$make) {
-
+        /** @phpstan-ignore callable.nonCallable */
         $result = array_map(fn($key, $body) => $make($key, $body, $path), array_keys($node), $node);
 
         return implode(PHP_EOL, array_filter($result));

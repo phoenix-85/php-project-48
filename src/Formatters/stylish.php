@@ -21,14 +21,14 @@ function formatStylish(array $data): string
         foreach ($node as $key => $item) {
             $status = $item["status"] ?? null;
             if ($status === "removed") {
-                $lines[] = "{$indent1}{$key}: " . $iter($item["value"], $depth + 1);
+                $lines[] = "{$indent1}{$key}: {$iter($item["value"], $depth + 1)}";
             } elseif ($status === "added") {
-                $lines[] = "{$indent2}{$key}: " . $iter($item["value"], $depth + 1);
+                $lines[] = "{$indent2}{$key}: {$iter($item["value"], $depth + 1)}";
             } elseif ($status === "updated") {
-                $lines[] = "{$indent1}{$key}: " . $iter($item["value1"], $depth + 1);
-                $lines[] = "{$indent2}{$key}: " . $iter($item["value2"], $depth + 1);
+                $lines[] = "{$indent1}{$key}: {$iter($item["value1"], $depth + 1)}";
+                $lines[] = "{$indent2}{$key}: {$iter($item["value2"], $depth + 1)}";
             } else {
-                $lines[] = "{$currentIndent}{$key}: " . $iter($item["value"], $depth + 1);
+                $lines[] = "{$currentIndent}{$key}: {$iter($item["value"], $depth + 1)}";
             }
         }
 
