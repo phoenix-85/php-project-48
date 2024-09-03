@@ -45,11 +45,13 @@ function makeDiffData(object $data1, object $data2): array
                 // @phpstan-ignore-next-line
                 "value" => $makeNode($data1->$key)];
         }
+        // @phpstan-ignore-next-line
         if (is_object($data1->$key) && is_object($data2->$key)) {
             $result = [
                 "status" => "matched",
                 // @phpstan-ignore-next-line
                 "value" => makeDiffData($data1->$key, $data2->$key)];
+            // @phpstan-ignore-next-line
         } elseif ($data1->$key === $data2->$key) {
             $result = [
                 "status" => "nested",

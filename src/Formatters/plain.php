@@ -6,12 +6,13 @@ namespace Differ\Formatters\plain;
 function formatPlain(array $data): string
 {
     $iter = function ($node, $path = "") use (&$make) {
-        // @phpstan-ignore callable.nonCallable
+        // @phpstan-ignore-next-line
         $result = array_map(fn($key, $body) => $make($key, $body, $path), array_keys($node), $node);
 
         return implode(PHP_EOL, array_filter($result));
     };
 
+    // @phpstan-ignore-next-line
     $make = function ($key, $body, $keys = "") use ($iter) {
         $path = ($keys == "") ? "$key" : "{$keys}.{$key}";
         $status = $body["status"] ?? null;
