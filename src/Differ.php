@@ -6,7 +6,7 @@ use function Differ\Formatter\formatOutput;
 use function Differ\Parsers\getDataFromFile;
 use function Functional\sort as func_sort;
 
-function genDiff($pathToFile1, $pathToFile2, $format): string
+function genDiff($pathToFile1, $pathToFile2, $format = 'stylish'): string
 {
     $data1 = getDataFromFile($pathToFile1);
     $data2 = getDataFromFile($pathToFile2);
